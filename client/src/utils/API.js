@@ -19,22 +19,18 @@ export default {
 
     // Gets all articles
     getSavedArticles: function() {
-        console.log('getSavedArticleS')
         return axios.get("/api/articles");
     },
     // Gets the book with the given id
     getSavedArticle: function(id) {
-        console.log('getSavedArticlE', 'id:', id)
         return axios.get("/api/articles/" + id);
     },
     // Deletes the book with the given id
     deleteSavedArticle: function(id) {
-        console.log('deleteSavedArticle', 'id:', id)
         return axios.delete("/api/articles/" + id);
     },
     // Saves an article to the database
     saveArticle: function(articleData) {
-        console.log('saveArticle', 'articleData:', articleData)
         return axios.post("/api/articles", articleData);
     }
 };

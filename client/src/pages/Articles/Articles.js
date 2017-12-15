@@ -23,7 +23,6 @@ class Articles extends Component {
         topic: "",
         begin: "",
         end: "",
-        isLoading: true
     };
 
     componentDidMount() {
@@ -66,15 +65,15 @@ class Articles extends Component {
     handleFormSubmit = event => {
         event.preventDefault();
 
-        // queryURLBase is the start of our API endpoint. The searchTerm will be appended to this when
-        // the user hits the search button
 
+        const queryURL = (`${url}&q=${this.state.topic}&begin_date=${this.state.begin}0101&end_date=${this.state.end}1231`);
+        console.log('queryURL', queryURL)
         axios
-            .get(url, {
+            .get(queryURL, {
                 query: {
                     q: this.state.topic,
-                    begin_date: this.state.begin,
-                    end_date: this.state.end
+                    begin_date: this.state.begin + "0101",
+                    end_date: this.state.end + "0101"
                 }
             })
             .then(response => {
@@ -140,16 +139,15 @@ class Articles extends Component {
                                             >
                                                 <strong>
                                                     {moment(newArticle.pub_date).format("MMM Do YY")}{" - "}{newArticle.headline.main}{" "}
-                                                    by {newArticle.begin}{" "}
                                                 </strong>
                                             </Link>{" "}
                                             <SaveBtn
                                                 onClick={() =>
                                                     this.saveArticle(
                                                         {
-                                                            title: newArticle.title,
+                                                            title: newArticle.headline.main,
                                                             date: newArticle.pub_date,
-                                                            url: newArticle.web_url
+                                                            URL: newArticle.web_url
                                                         }
                                                     )
                                                 }
@@ -172,12 +170,10 @@ class Articles extends Component {
                                     {this.state.articles.map(article => (
                                         <ListItem key={article._id}>
                                             <Link
-                                                to={"/articles/" + article._id}
+                                                to={article.URL}
                                             >
                                                 <strong>
-                                                    {" "}
-                                                    {article.title} by{" "}
-                                                    {article.begin}{" "}
+                                                    {moment(article.date).format("MMM Do YY")}{" - "}{article.title}{" "}
                                                 </strong>
                                             </Link>{" "}
                                             <DeleteBtn
