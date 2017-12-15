@@ -87,7 +87,7 @@ class Articles extends Component {
 
     render() {
         return (
-            <Container fluid>
+            <Container>
                 <Row>
                     <Col size="lg-12">
                         <Jumbotron>
@@ -135,19 +135,22 @@ class Articles extends Component {
                                         <ListItem key={newArticle._id}>
                                             <Link
                                                 to={
-                                                    "/newArticles/" +
-                                                    newArticle._id
+                                                    newArticle.web_url
                                                 }
                                             >
                                                 <strong>
-                                                    {newArticle.pub_date}" - "}{newArticle.headline.main}{" "}
+                                                    {moment(newArticle.pub_date).format("MMM Do YY")}{" - "}{newArticle.headline.main}{" "}
                                                     by {newArticle.begin}{" "}
                                                 </strong>
                                             </Link>{" "}
                                             <SaveBtn
                                                 onClick={() =>
-                                                    this.deleteSavedArticle(
-                                                        newArticle._id
+                                                    this.saveArticle(
+                                                        {
+                                                            title: newArticle.title,
+                                                            date: newArticle.pub_date,
+                                                            url: newArticle.web_url
+                                                        }
                                                     )
                                                 }
                                             />
